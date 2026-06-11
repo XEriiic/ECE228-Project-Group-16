@@ -1,6 +1,3 @@
-# 这个文件也是不用动的，讲解可以看https://zhuanlan.zhihu.com/p/77899090
-# 或https://blog.csdn.net/daodaipsrensheng/article/details/118029074
-# 或https://zhuanlan.zhihu.com/p/225597229
 import torch
 import torch.nn as nn
 import torch.nn.functional as F
@@ -24,7 +21,6 @@ model_urls = {
     'wide_resnet101_2': 'https://download.pytorch.org/models/wide_resnet101_2-32ee1156.pth',
 }
 
-#3x3卷积
 def conv3x3(in_planes, out_planes, stride=1, groups=1, dilation=1):
     """3x3 convolution with padding"""
     return nn.Conv2d(in_planes, out_planes, kernel_size=3, stride=stride,
@@ -164,12 +160,10 @@ class ResNet(nn.Module):
                              "or a 3-element tuple, got {}".format(replace_stride_with_dilation))
         self.groups = groups
         self.base_width = width_per_group
-        # 第一层
         self.conv1 = nn.Conv2d(3, self.inplanes, kernel_size=7, stride=self.strides[0], padding=3,
                                bias=False)
-        self.bn1 = norm_layer(self.inplanes) #正态分布（归一化操作）
+        self.bn1 = norm_layer(self.inplanes)
         self.relu = nn.ReLU(inplace=True)
-        # stages部分，分别第1，2，3，4个stage
         self.maxpool = nn.MaxPool2d(kernel_size=3, stride=self.strides[1], padding=1)
         self.layer1 = self._make_layer(block, 64, layers[0])
         self.layer2 = self._make_layer(block, 128, layers[1], stride=self.strides[2],
@@ -182,11 +176,11 @@ class ResNet(nn.Module):
         self.fc = nn.Linear(512 * block.expansion, num_classes)
 
         for m in self.modules():
-            if isinstance(m, nn.Conv2d) :#isinstance()函数来判断一个对象是否是一个已知的类型，类似 type()，其实就是没有正态分布的话咱就kaiming均匀分布。
+            if isinstance(m, nn.Conv2d) :
                 nn.init.kaiming_normal_(m.weight, mode='fan_out', nonlinearity='relu')
-            elif isinstance(m, (nn.BatchNorm2d, nn.GroupNorm)): #kaiming均匀分布
-                nn.init.constant_(m.weight, 1) #torch.nn.init.constant(tensor, val)，用val的值填充输入的张量或变量，即变成全1分布
-                nn.init.constant_(m.bias, 0) #偏置变为0
+            elif isinstance(m, (nn.BatchNorm2d, nn.GroupNorm)):
+                nn.init.constant_(m.weight, 1)
+                nn.init.constant_(m.bias, 0)
 
 
         # Zero-initialize the last BN in each residual branch,
@@ -266,7 +260,7 @@ def resnet18(pretrained=False, progress=True, **kwargs):
         progress (bool): If True, displays a progress bar of the download to stderr
     """
     return _resnet('resnet18', BasicBlock, [2, 2, 2, 2], pretrained, progress,
-                   **kwargs) # 4个resblock，每个里面两个basicblock
+                   **kwargs)
 
 def resnet34(pretrained=False, progress=True, **kwargs):
     r"""ResNet-34 model from
@@ -289,7 +283,7 @@ def resnet50(pretrained=False, progress=True, **kwargs):
         progress (bool): If True, displays a progress bar of the download to stderr
     """
     return _resnet('resnet50', Bottleneck, [3, 4, 6, 3], pretrained, progress,
-                   **kwargs) # 这里大于50层了就是bottleneck
+                   **kwargs)
 
 
 def resnet101(pretrained=False, progress=True, **kwargs):

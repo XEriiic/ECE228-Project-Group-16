@@ -1,5 +1,4 @@
 # https://github.com/danfenghong/IEEE_TGRS_SpectralFormer/blob/main/vit_pytorch.py
-# ViT 的代码
 import torch
 import torch.nn.functional as F
 import math
@@ -57,7 +56,7 @@ class PreNorm2(nn.Module):
     def forward(self, x, x2, **kwargs):
         return self.fn(self.norm(x), self.norm(x2), **kwargs)
 
-class FeedForward(nn.Module):  # 好像是encoder和decoder中的MLP
+class FeedForward(nn.Module):
     def __init__(self, dim, hidden_dim, dropout=0.):
         super().__init__()
         self.net = nn.Sequential(
@@ -97,7 +96,6 @@ class PatchMerge(nn.Module):
         x = x.view(B, -1, 4 * C)  # B H/2*W/2 4*C
         x = self.norm(x)
         x = self.reduction(x)  # [B, H/2*W/2, 2*C]
-        # 最后的结果高和宽变为原来的一半， 通道数翻倍
         return x
 
 
@@ -218,9 +216,7 @@ class Transformer(nn.Module):
             self.layers.append(nn.ModuleList([
                 # Residual(PreNorm(dim, Attention(dim, heads=heads, dim_head=dim_head, dropout=dropout))),
                 PreNorm(dim, Attention(dim, heads=heads, dim_head=dim_head, dropout=dropout)),
-                # 第一个就是，先对输入做layerNormalization，然后放到attention得到attention的结果，然后结果和做layerNormalization之前的输入相加做一个残差链接；
                 Residual((PreNorm(dim, FeedForward(dim, mlp_dim, dropout=dropout))))
-                # 第二个就是，x->LayerNormalization->FeedForward线性层->y,然后这个y和输入的x相加，做残差连接
             ]))
 
     def forward(self, x, mask=None, attention_res=None, alpha=0.7, prev1 = None):

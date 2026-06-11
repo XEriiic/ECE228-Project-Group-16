@@ -200,7 +200,7 @@ class CDTrainer():
 
     def _collect_epoch_states(self):
         scores = self.running_metric.get_scores()
-        self.epoch_acc = scores['mf1'] # 这里修改如何更新模型的规则
+        self.epoch_acc = scores['mf1']
         #self.epoch_acc = scores['f1_1']
         self.logger.write('Is_training: %s. Epoch %d / %d, epoch_mF1= %.5f\n' %
               (self.is_training, self.epoch_id, self.max_num_epochs-1, self.epoch_acc))
@@ -219,7 +219,7 @@ class CDTrainer():
         self.logger.write('\n')
 
         # update the best model (based on eval acc)
-        if self.epoch_acc > self.best_val_acc: # 用mF1来评估模型
+        if self.epoch_acc > self.best_val_acc:
             self.best_val_acc = self.epoch_acc
             self.best_epoch_id = self.epoch_id
             self._save_checkpoint(ckpt_name='best_ckpt.pt')

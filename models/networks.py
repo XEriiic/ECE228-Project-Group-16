@@ -1,4 +1,3 @@
-# 141行之前：https://github.com/junyanz/pytorch-CycleGAN-and-pix2pix/blob/master/models/networks.py
 import torch
 import torch.nn as nn
 from torch.nn import init
@@ -30,7 +29,7 @@ def h(net, name):
     batch = net.shape[0]
     for b in range(0, batch, 1):
         print(b)
-        net_copy = net[b]  # 取batch的第一张图
+        net_copy = net[b]
         # hot = []
         # net_copy.swapaxes(0, 2)
         net_copy = rearrange(net_copy, 'c w h ->  w h c')
@@ -48,7 +47,7 @@ def h(net, name):
         image_avg = image_avg / 32
 
         image_1 = image_avg
-        cv2.normalize(image_1, image_avg, 0, 255, cv2.NORM_MINMAX)  # 原图像 目标图像
+        cv2.normalize(image_1, image_avg, 0, 255, cv2.NORM_MINMAX)
         image_2 = image_avg.astype(np.uint8)
         image = cv2.applyColorMap(image_2, cv2.COLORMAP_JET)
         cv2.imwrite("/autodl-fs/data/CD_Dataset/test/hotmap/" + name + "_"  + str(b) + ".jpg", image)
@@ -66,7 +65,7 @@ def get_scheduler(optimizer, args):
 
     Parameters:
         optimizer          -- the optimizer of the network
-        args (option class) -- stores all the experiment flags; needs to be a subclass of BaseOptions．　
+        args (option class) -- stores all the experiment flags; needs to be a subclass of BaseOptions.
                               opt.lr_policy is the name of learning rate policy: linear | step | plateau | cosine
 
     For 'linear', we keep the same learning rate for the first <opt.niter> epochs
@@ -209,7 +208,7 @@ class ResNet(torch.nn.Module):
         In the constructor we instantiate two nn.Linear modules and assign them as
         member variables.
         """
-        super(ResNet, self).__init__() #调用nn.module的init方法
+        super(ResNet, self).__init__()
 
         expand = 1
         if backbone == 'resnet18':
@@ -228,7 +227,6 @@ class ResNet(torch.nn.Module):
 
         else:
             raise NotImplementedError
-        # self.xxx 添加一个子模块
         self.relu = nn.ReLU()
         self.upsamplex2 = nn.Upsample(scale_factor=2)
         self.upsamplex4 = nn.Upsample(scale_factor=4, mode='bilinear')
@@ -268,7 +266,7 @@ class ResNet(torch.nn.Module):
 
 
 
-    def forward(self, x1, x2): # 好像是用于比较的base
+    def forward(self, x1, x2):
         x1 = self.forward_single(x1)
         x2 = self.forward_single(x2)
         x = torch.abs(x1 - x2)
@@ -283,7 +281,6 @@ class ResNet(torch.nn.Module):
 
     def forward_single(self, x):
         # resnet layers
-        # tensor大小: b, c, h, w (传入图片数量，色彩通道数量，高，宽)
         # print('original image size', x.size())
         x = self.resnet.conv1(x) #
         x = self.resnet.bn1(x)   # 8 64 128 128
@@ -332,7 +329,6 @@ class ResNet(torch.nn.Module):
 
 
         # feature_map_data = torch.cat((x2,x3,x4,x), dim=1)[0, 0].cpu().detach().numpy()
-        # 使用Matplotlib绘制特征图的热力图
         # plt.imshow(feature_map_data, cmap="viridis")
         # plt.savefig(hotmappath, dpi=100)
         # plt.close()
@@ -361,12 +357,12 @@ class BASE_Transformer(ResNet):
                                                )
         self.token_len = token_len
         self.conv_a = nn.Conv2d(32, self.token_len, kernel_size=1,
-                                padding=0, bias=False) # 二维卷积 # 改了
+                                padding=0, bias=False)
         self.k = k_nums
         self.cluster_nums = clusters
         self.tokenizer = tokenizer
         if not self.tokenizer:
-            #  if not use tokenzier，then downsample the feature map into a certain size
+            #  if not use tokenizer, then downsample the feature map into a certain size
             self.pooling_size = pool_size
             self.pool_mode = pool_mode
             self.token_len = self.pooling_size * self.pooling_size
@@ -378,7 +374,7 @@ class BASE_Transformer(ResNet):
         self.cluster_nums = 10
         self.with_pos = with_pos
         if with_pos == 'learned':
-            self.pos_embedding = nn.Parameter(torch.randn(1, self.cluster_nums*2, 32)) # 改了
+            self.pos_embedding = nn.Parameter(torch.randn(1, self.cluster_nums*2, 32))
         decoder_pos_size = 256//4
         self.with_decoder_pos = with_decoder_pos
         if self.with_decoder_pos == 'learned':
@@ -398,21 +394,19 @@ class BASE_Transformer(ResNet):
         self.mlp_layer = MLPLayer(dim=dim, mlp_dim=mlp_dim, dropout=0)
         self.gc1 = GraphConvolution(in_features=32, out_features=1)
 
-    def _forward_semantic_tokens(self, x): # semantic tokenizer提取token
-        b, c, h, w = x.shape # b batch size？ c 深度 h 行数 w 列数
+    def _forward_semantic_tokens(self, x):
+        b, c, h, w = x.shape
         spatial_attention = self.conv_a(x)
         # print('sa before view', spatial_attention.size())
         spatial_attention = spatial_attention.view([b, self.token_len, -1]).contiguous()
         # print('sa after view', spatial_attention.size())
-        # contiguous()将一个不连续的Tensor变成连续的，从而确保内存块的布局是连续的
         spatial_attention = torch.softmax(spatial_attention, dim=-1)
         # print('sa after softmax', spatial_attention.size())
         # print('x before view', x.size())
-        x = x.view([b, c, -1]).contiguous() #view相当于reshape b
+        x = x.view([b, c, -1]).contiguous()
         # print('x after view', x.size())
         tokens = torch.einsum('bln,bcn->blc', spatial_attention, x)
         # print('token', tokens.size())
-        #爱因斯坦求和约定 这里是相乘？
         return tokens
 
     def _forward_tokens(self, x, index):

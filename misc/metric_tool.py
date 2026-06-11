@@ -52,7 +52,6 @@ class ConfuseMatrixMeter(AverageMeter):
         self.n_class = n_class
 
     def update_cm(self, pr, gt, weight=1):
-        """获得当前混淆矩阵，并计算当前F1得分，并更新混淆矩阵"""
         val = get_confuse_matrix(num_classes=self.n_class, label_gts=gt, label_preds=pr)
         self.update(val, weight)
         current_score = cm2F1(val)
@@ -73,8 +72,8 @@ def cm2F1(confusion_matrix):
     hist = confusion_matrix
     n_class = hist.shape[0]
     tp = np.diag(hist)
-    sum_a1 = hist.sum(axis=1) #每一行相加 [TP+FN FP+TN]
-    sum_a0 = hist.sum(axis=0) #每一列相加 [TP+FP FN+TN]
+    sum_a1 = hist.sum(axis=1) # [TP+FN FP+TN]
+    sum_a0 = hist.sum(axis=0) # [TP+FP FN+TN]
     # ---------------------------------------------------------------------- #
     # 1. Accuracy & Class Accuracy
     # ---------------------------------------------------------------------- #
@@ -139,7 +138,6 @@ def cm2score(confusion_matrix):
 
 
 def get_confuse_matrix(num_classes, label_gts, label_preds):
-    """计算一组预测的混淆矩阵"""
     def __fast_hist(label_gt, label_pred):
         """
         Collect values for Confusion Matrix
