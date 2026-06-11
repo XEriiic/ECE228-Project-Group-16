@@ -1,0 +1,10 @@
+================ (Sun Apr 21 01:56:07 2024) ================
+gpu_ids: [0] project_name: ablation-no-refining print_models: False num_workers: 6 dataset: CDDataset data_name: autodl-LEVIR256 batch_size: 8 split: test img_size: 256 n_class: 2 net_G: ReViT checkpoint_name: best_ckpt.pt checkpoint_dir: checkpoints/ablation-no-refining vis_dir: vis/ablation-no-refining loading last checkpoint...
+Eval Historical_best_acc = 0.9407 (at epoch 132)
+
+Begin evaluation...
+Is_training: False. [1,256],  running_mf1: 0.94143
+Is_training: False. [101,256],  running_mf1: 0.93043
+Is_training: False. [201,256],  running_mf1: 0.92843
+acc: 0.98826 miou: 0.88973 mf1: 0.93879 iou_0: 0.98771 iou_1: 0.79175 F1_0: 0.99382 F1_1: 0.88377 precision_0: 0.99337 precision_1: 0.89131 recall_0: 0.99426 recall_1: 0.87636 
+
