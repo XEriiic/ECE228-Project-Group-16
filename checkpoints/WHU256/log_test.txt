@@ -1,0 +1,8 @@
+================ (Tue Apr 16 20:26:30 2024) ================
+gpu_ids: [0] project_name: autodl-WHU256-resattn-2mlp-kmeans-loss-resnet-mlpratio32-realnext-1convgroup-mf1 checkpoint_root: checkpoints num_workers: 6 dataset: CDDataset data_name: autodl-WHU256 batch_size: 8 split: train split_val: val img_size: 256 n_class: 2 net_G: ReViT loss: ce_dice optimizer: sgd lr: 0.015 max_epochs: 250 lr_policy: linear lr_decay_iters: 200 checkpoint_dir: checkpoints/autodl-WHU256-resattn-2mlp-kmeans-loss-resnet-mlpratio32-realnext-1convgroup-mf1 vis_dir: vis/autodl-WHU256-resattn-2mlp-kmeans-loss-resnet-mlpratio32-realnext-1convgroup-mf1 loading last checkpoint...
+Eval Historical_best_acc = 0.9465 (at epoch 245)
+
+Begin evaluation...
+Is_training: False. [1,95],  running_mf1: 0.92479
+acc: 0.99267 miou: 0.90822 mf1: 0.94986 iou_0: 0.99241 iou_1: 0.82402 F1_0: 0.99619 F1_1: 0.90352 precision_0: 0.99498 precision_1: 0.93237 recall_0: 0.99741 recall_1: 0.87641 
+

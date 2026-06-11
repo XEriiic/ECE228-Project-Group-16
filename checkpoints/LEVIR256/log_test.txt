@@ -1,0 +1,10 @@
+================ (Sat Apr 20 21:34:21 2024) ================
+gpu_ids: [0] project_name: autodl-LEVIR256-resattn-2mlp-kmeans-loss-resnet-mlpratio32-realnext-1convgroup-mf1-retry checkpoint_root: checkpoints num_workers: 6 dataset: CDDataset data_name: autodl-LEVIR256 batch_size: 8 split: train split_val: val img_size: 256 n_class: 2 net_G: ReViT loss: ce_dice optimizer: sgd lr: 0.01 max_epochs: 250 lr_policy: linear lr_decay_iters: 200 checkpoint_dir: checkpoints/autodl-LEVIR256-resattn-2mlp-kmeans-loss-resnet-mlpratio32-realnext-1convgroup-mf1-retry vis_dir: vis/autodl-LEVIR256-resattn-2mlp-kmeans-loss-resnet-mlpratio32-realnext-1convgroup-mf1-retry loading last checkpoint...
+Eval Historical_best_acc = 0.9463 (at epoch 235)
+
+Begin evaluation...
+Is_training: False. [1,256],  running_mf1: 0.93983
+Is_training: False. [101,256],  running_mf1: 0.94588
+Is_training: False. [201,256],  running_mf1: 0.93597
+acc: 0.98923 miou: 0.89651 mf1: 0.94293 iou_0: 0.98873 iou_1: 0.80429 F1_0: 0.99434 F1_1: 0.89153 precision_0: 0.99297 precision_1: 0.91566 recall_0: 0.99571 recall_1: 0.86865 
+

@@ -1,0 +1,24 @@
+================ (Sat Apr 20 00:21:40 2024) ================
+gpu_ids: [0] project_name: autodl-DSIFN256-resattn-2mlp-kmeans-loss-resnet-mlpratio32-realnext-1convgroup-mf1-b9-test3 print_models: False num_workers: 6 dataset: CDDataset data_name: autodl-DSIFN256 batch_size: 8 split: test img_size: 256 n_class: 2 net_G: ReViT checkpoint_name: last_ckpt.pt checkpoint_dir: checkpoints/autodl-DSIFN256-resattn-2mlp-kmeans-loss-resnet-mlpratio32-realnext-1convgroup-mf1-b9-test3 vis_dir: vis/autodl-DSIFN256-resattn-2mlp-kmeans-loss-resnet-mlpratio32-realnext-1convgroup-mf1-b9-test3 loading last checkpoint...
+Eval Historical_best_acc = 0.8778 (at epoch 249)
+
+Begin evaluation...
+Is_training: False. [1,24],  running_mf1: 0.25513
+acc: 0.26581 miou: 0.15180 mf1: 0.26195 iou_0: 0.11644 iou_1: 0.18716 F1_0: 0.20860 F1_1: 0.31530 precision_0: 0.99103 precision_1: 0.18734 recall_0: 0.11657 recall_1: 0.99485 
+
+================ (Sat Apr 20 00:22:18 2024) ================
+gpu_ids: [0] project_name: autodl-DSIFN256-resattn-2mlp-kmeans-loss-resnet-mlpratio32-realnext-1convgroup-mf1-b9-test3 print_models: False num_workers: 6 dataset: CDDataset data_name: autodl-DSIFN256 batch_size: 8 split: test img_size: 256 n_class: 2 net_G: ReViT checkpoint_name: 84.33last_ckpt.pt checkpoint_dir: checkpoints/autodl-DSIFN256-resattn-2mlp-kmeans-loss-resnet-mlpratio32-realnext-1convgroup-mf1-b9-test3 vis_dir: vis/autodl-DSIFN256-resattn-2mlp-kmeans-loss-resnet-mlpratio32-realnext-1convgroup-mf1-b9-test3 loading last checkpoint...
+Eval Historical_best_acc = 0.8778 (at epoch 249)
+
+Begin evaluation...
+Is_training: False. [1,24],  running_mf1: 0.72350
+acc: 0.82443 miou: 0.61511 mf1: 0.74575 iou_0: 0.79725 iou_1: 0.43298 F1_0: 0.88719 F1_1: 0.60430 precision_0: 0.95062 precision_1: 0.48969 recall_0: 0.83169 recall_1: 0.78897 
+
+================ (Sat Apr 20 13:06:36 2024) ================
+gpu_ids: [0] project_name: autodl-DSIFN256-resattn-2mlp-kmeans-loss-resnet-mlpratio32-realnext-1convgroup-mf1-b9-test3 print_models: False num_workers: 6 dataset: CDDataset data_name: autodl-DSIFN256 batch_size: 8 split: test img_size: 256 n_class: 2 net_G: ReViT checkpoint_name: last_ckpt.pt checkpoint_dir: checkpoints/autodl-DSIFN256-resattn-2mlp-kmeans-loss-resnet-mlpratio32-realnext-1convgroup-mf1-b9-test3 vis_dir: vis/autodl-DSIFN256-resattn-2mlp-kmeans-loss-resnet-mlpratio32-realnext-1convgroup-mf1-b9-test3 loading last checkpoint...
+Eval Historical_best_acc = 0.8778 (at epoch 249)
+
+Begin evaluation...
+Is_training: False. [1,24],  running_mf1: 0.66542
+acc: 0.62967 miou: 0.43033 mf1: 0.59028 iou_0: 0.55924 iou_1: 0.30143 F1_0: 0.71732 F1_1: 0.46323 precision_0: 0.97890 precision_1: 0.30730 recall_0: 0.56607 recall_1: 0.94039 
+
